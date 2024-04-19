@@ -2,15 +2,25 @@ package com.mockshirt.mockshirt.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.GetMapping;
+import com.mockshirt.mockshirt.entity.Sleeve;
+import com.mockshirt.mockshirt.service.interfaces.IService;
 @RestController
 @RequestMapping("/sleeves")
 public class SleeveController {
-    // TODO: Ajustar Controller
-    @GetMapping
-    public String list() {
-        return "Mangas de uniforme";
+    private final IService sleeveService;
+
+    public SleeveController(@Qualifier("SleeveService") IService sleeveService) {
+        this.sleeveService = sleeveService;
     }
 
+    @GetMapping
+    public List<Sleeve> list() {
+        List<Sleeve> result = this.sleeveService.list();
+        return result;
+    }
 }
