@@ -1,6 +1,5 @@
 package com.mockshirt.mockshirt.service;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -21,6 +20,5 @@ public class ColorService implements IService<Color> {
     public List<Color> list() {
         List<Color> result = repository.findAll();
         return result;
-
     }
 }

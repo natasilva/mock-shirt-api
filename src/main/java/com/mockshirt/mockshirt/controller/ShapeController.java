@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/shapes")
 public class ShapeController {
-    private final IService shapeService;
+    private final IService<Shape> shapeService;
 
-    public ShapeController(@Qualifier("ShapeService") IService shapeService) {
+    public ShapeController(@Qualifier("ShapeService") IService<Shape> shapeService) {
         this.shapeService = shapeService;
     }
 
@@ -25,5 +25,4 @@ public class ShapeController {
         List<Shape> result = this.shapeService.list();
         return result;
     }
-
 }

@@ -21,6 +21,5 @@ public class ShapeService implements IService<Shape> {
     public List<Shape> list() {
         List<Shape> result = repository.findAll();
         return result;
-
     }
 }

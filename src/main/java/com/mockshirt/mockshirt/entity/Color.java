@@ -18,7 +18,6 @@ public class Color {
     private Long id;
     private String name;
     private String key;
-    private Float value;
 
     public Color() {
     }

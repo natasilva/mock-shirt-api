@@ -21,7 +21,6 @@ public class SleeveService implements IService<Sleeve> {
     public List<Sleeve> list() {
         List<Sleeve> result = repository.findAll();
         return result;
-
     }
 
 }

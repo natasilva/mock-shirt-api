@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.mockshirt.mockshirt.entity.Sleeve;
 import com.mockshirt.mockshirt.service.interfaces.IService;
+
 @RestController
 @RequestMapping("/sleeves")
 public class SleeveController {
-    private final IService sleeveService;
+    private final IService<Sleeve> sleeveService;
 
-    public SleeveController(@Qualifier("SleeveService") IService sleeveService) {
+    public SleeveController(@Qualifier("SleeveService") IService<Sleeve> sleeveService) {
         this.sleeveService = sleeveService;
     }
 

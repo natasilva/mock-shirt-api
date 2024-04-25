@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.mockshirt.mockshirt.entity.Size;
 import com.mockshirt.mockshirt.service.interfaces.IService;
+
 @RestController
 @RequestMapping("/sizes")
 public class SizeController {
-    private final IService sizeService;
+    private final IService<Size> sizeService;
 
-    public SizeController(@Qualifier("SizeService") IService sizeService) {
+    public SizeController(@Qualifier("SizeService") IService<Size> sizeService) {
         this.sizeService = sizeService;
     }
 

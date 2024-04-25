@@ -21,6 +21,5 @@ public class SizeService implements IService<Size> {
     public List<Size> list() {
         List<Size> result = repository.findAll();
         return result;
-
     }
 }

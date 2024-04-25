@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/colors")
 public class ColorController {
-    private final IService colorService;
+    private final IService<Color> colorService;
 
-    public ColorController(@Qualifier("ColorService") IService colorService) {
+    public ColorController(@Qualifier("ColorService") IService<Color> colorService) {
         this.colorService = colorService;
     }
 

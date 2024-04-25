@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/collars")
 public class CollarController {
-    private final IService collarService;
+    private final IService<Collar> collarService;
 
-    public CollarController(@Qualifier("CollarService") IService collarService) {
+    public CollarController(@Qualifier("CollarService") IService<Collar> collarService) {
         this.collarService = collarService;
     }
 

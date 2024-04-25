@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @RestController
 @RequestMapping("/materials")
 public class MaterialController {
-    private final IService materialService;
+    private final IService<Material> materialService;
 
-    public MaterialController(@Qualifier("MaterialService") IService materialService) {
+    public MaterialController(@Qualifier("MaterialService") IService<Material> materialService) {
         this.materialService = materialService;
     }
 

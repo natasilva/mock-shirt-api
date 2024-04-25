@@ -23,6 +23,5 @@ public class CollarService implements IService<Collar> {
     public List<Collar> list() {
         List<Collar> result = repository.findAll();
         return result;
-
     }
 }
