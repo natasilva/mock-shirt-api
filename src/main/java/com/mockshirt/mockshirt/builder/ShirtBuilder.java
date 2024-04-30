@@ -9,6 +9,7 @@ import com.mockshirt.mockshirt.entity.Shirt;
 import com.mockshirt.mockshirt.service.ImageService;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.sql.Blob;
 
 @Component
@@ -70,8 +71,11 @@ public class ShirtBuilder implements IShirtBuilder {
                     .getBlob();
 
             return shirtImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
             return null;
         }
     }
@@ -84,13 +88,16 @@ public class ShirtBuilder implements IShirtBuilder {
                     .setLogo(logo)
                     .setShape(shape)
                     .withFrontLogo()
-                    .withLeftSleeveLogo() // TODO: verificar se deve ou não adicionar logo na manga
-                    .withRightSleeveLogo() // TODO: verificar se deve ou não adicionar logo na manga
+                    .withLeftSleeveLogo(this.sleeveLogo)
+                    .withRightSleeveLogo(this.sleeveLogo)
                     .getBlob();
 
             return shirtImage;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
             return null;
         }
     }

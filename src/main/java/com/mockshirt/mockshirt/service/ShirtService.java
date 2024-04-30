@@ -48,10 +48,12 @@ public class ShirtService implements IShirtService {
 
             return shirts;
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
             return null;
         }
-
     }
 }

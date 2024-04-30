@@ -16,9 +16,9 @@ public interface IShirtImageBuilder {
 
     ShirtImageBuilder withFrontLogo();
 
-    ShirtImageBuilder withRightSleeveLogo();
+    ShirtImageBuilder withRightSleeveLogo(boolean execute);
 
-    ShirtImageBuilder withLeftSleeveLogo();
+    ShirtImageBuilder withLeftSleeveLogo(boolean execute);
 
     Blob getBlob();
 }

@@ -56,7 +56,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         return this;
     }
 
-    public ShirtImageBuilder withRightSleeveLogo() {
+    public ShirtImageBuilder withRightSleeveLogo(boolean execute) {
+        if (!execute) {
+            return this;
+        }
+
         int x = 300;
         int y = 100;
 
@@ -67,7 +71,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         return this;
     }
 
-    public ShirtImageBuilder withLeftSleeveLogo() {
+    public ShirtImageBuilder withLeftSleeveLogo(boolean execute) {
+        if (!execute) {
+            return this;
+        }
+
         int x = 50;
         int y = 100;
 
@@ -81,11 +89,13 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
     private void drawLogoWithPosition(BufferedImage logo, int x, int y, boolean rotate) {
         Graphics2D g2d = shirtImage.createGraphics();
         imageService.drawBaseImage(g2d, shirtImage);
+
         if (rotate) {
             imageService.rotateAndDrawLogo(g2d, logo, x, y);
         } else {
             imageService.drawLogo(g2d, logo, x, y);
         }
+
         g2d.dispose();
     }
 
