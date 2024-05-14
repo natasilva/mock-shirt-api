@@ -16,9 +16,21 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.mockshirt.mockshirt.service.interfaces.IImageService;
 
 @Service
-public class ImageService {
+public class ImageService implements IImageService {
+
+    public BufferedImage loadImage(String filePath) throws IOException {
+        File imgFile = new File(
+                "D:/documents/javaprojects/mock-shirt/mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/"
+                        + filePath);
+
+        BufferedImage value = ImageIO.read(imgFile);
+        return value;
+    }
 
     // Baixa imagem de uma URL
     public BufferedImage downloadImage(String imageUrl) throws IOException, URISyntaxException {
@@ -39,12 +51,15 @@ public class ImageService {
 
     // Salva uma imagem no diretório
     public void saveImage(BufferedImage image, String filePath) throws IOException {
-        ImageIO.write(image, "PNG", new File(filePath));
+        ImageIO.write(image, "PNG", new File(
+                "D:/documents/javaprojects/mock-shirt/mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/"
+                        + filePath));
     }
 
-    // Converte imagem do tipo byte[] para o tipo BufferdImage
-    public BufferedImage convertToBufferedImage(byte[] bytes) {
+    // Converte imagem do tipo MultipartFile para o tipo BufferdImage
+    public BufferedImage convertToBufferedImage(MultipartFile multipartFile) {
         try {
+            byte[] bytes = multipartFile.getBytes();
             ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
             BufferedImage image = ImageIO.read(bis);
             bis.close();
@@ -79,8 +94,8 @@ public class ImageService {
     }
 
     // Rotaciona a imagem da logo e desenha ela na imagem da camiseta
-    public void rotateAndDrawLogo(Graphics2D g2d, BufferedImage logo, int x, int y) {
-        double radians = Math.toRadians(45);
+    public void rotateAndDrawLogo(Graphics2D g2d, BufferedImage logo, int x, int y, int ang) {
+        double radians = Math.toRadians(ang);
         AffineTransform rotation = AffineTransform.getRotateInstance(radians, x + logo.getWidth() / 2,
                 y + logo.getHeight() / 2);
         g2d.setTransform(rotation);

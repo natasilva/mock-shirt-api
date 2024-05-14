@@ -2,26 +2,47 @@ package com.mockshirt.mockshirt.builder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mockshirt.mockshirt.builder.interfaces.IShirtBuilder;
 import com.mockshirt.mockshirt.builder.interfaces.IShirtImageBuilder;
+import com.mockshirt.mockshirt.builder.interfaces.IShirtValueBuilder;
 import com.mockshirt.mockshirt.entity.Shirt;
-import com.mockshirt.mockshirt.service.ImageService;
+import com.mockshirt.mockshirt.repository.MaterialRepository;
+import com.mockshirt.mockshirt.repository.SizeRepository;
+import com.mockshirt.mockshirt.repository.SleeveRepository;
+import com.mockshirt.mockshirt.service.interfaces.IImageService;
 
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.sql.Blob;
 
 @Component
 public class ShirtBuilder implements IShirtBuilder {
     @Autowired
-    private ImageService imageService;
+    private IImageService imageService;
+
+    @Autowired
+    private IShirtValueBuilder shirtValueBuilder;
 
     @Autowired
     private IShirtImageBuilder shirtImageBuilder;
 
+    @Autowired
+    private SizeRepository sizeRepository;
+
+    @Autowired
+    private MaterialRepository materialRepository;
+
+    @Autowired
+    private SleeveRepository sleeveRepository;
+
     private BufferedImage logo;
+    private int logoColorsQuantity;
     private boolean sleeveLogo;
+    private String material;
+    private String size;
+    private String sleeve;
+
     private String frontUrl;
     private String backUrl;
 
@@ -33,15 +54,35 @@ public class ShirtBuilder implements IShirtBuilder {
     }
 
     public Shirt build() {
+        float value = getValue();
         Blob back = getBackImage();
         Blob front = getFrontImage();
-        float value = getValue(null);
 
         return new Shirt(back, front, value);
     }
 
-    public ShirtBuilder setLogo(byte[] logo) {
-        this.logo = imageService.convertToBufferedImage(logo);
+    public ShirtBuilder setLogo(MultipartFile logo) {
+        this.logo = this.imageService.convertToBufferedImage(logo);
+        return this;
+    }
+
+    public ShirtBuilder setLogoColorsQuantity(int logoColorsQuantity) {
+        this.logoColorsQuantity = logoColorsQuantity;
+        return this;
+    }
+
+    public ShirtBuilder setMaterial(String material) {
+        this.material = material;
+        return this;
+    }
+
+    public ShirtBuilder setSize(String size) {
+        this.size = size;
+        return this;
+    }
+
+    public ShirtBuilder setSleeve(String sleeve) {
+        this.sleeve = sleeve;
         return this;
     }
 
@@ -62,18 +103,17 @@ public class ShirtBuilder implements IShirtBuilder {
 
     public Blob getBackImage() {
         try {
-            BufferedImage shape = imageService.downloadImage(backUrl);
+            // BufferedImage shape = imageService.downloadImage(backUrl);
 
-            Blob shirtImage = shirtImageBuilder.builder()
+            BufferedImage shapeImage = imageService.loadImage(backUrl);
+
+            Blob shirtImage = shirtImageBuilder
                     .setLogo(logo)
-                    .setShape(shape)
+                    .setShape(shapeImage)
                     .withBackLogo()
                     .getBlob();
 
             return shirtImage;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -82,27 +122,36 @@ public class ShirtBuilder implements IShirtBuilder {
 
     public Blob getFrontImage() {
         try {
-            BufferedImage shape = imageService.downloadImage(frontUrl);
+            // BufferedImage shape = imageService.downloadImage(frontUrl);
 
-            Blob shirtImage = shirtImageBuilder.builder()
+            BufferedImage shapeImage = imageService.loadImage(frontUrl);
+
+            Blob shirtImage = shirtImageBuilder
                     .setLogo(logo)
-                    .setShape(shape)
+                    .setShape(shapeImage)
                     .withFrontLogo()
                     .withLeftSleeveLogo(this.sleeveLogo)
                     .withRightSleeveLogo(this.sleeveLogo)
                     .getBlob();
 
             return shirtImage;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
 
-    private float getValue(Object data) {
-        return 30.50f; // TODO: Fazer lógica para gerar orçamento
+    private float getValue() {
+        float sizeValue = sizeRepository.findByName(this.size).getValue();
+        float materialValue = materialRepository.findByKey(this.material).getValue();
+        float sleeveValue = sleeveRepository.findByKey(this.sleeve).getValue();
+
+        return shirtValueBuilder
+                .setSizeValue(sizeValue)
+                .setMaterialValue(materialValue)
+                .setSleeveValue(sleeveValue)
+                .setSleeveLogo(sleeveLogo)
+                .setLogoColorsQuantity(logoColorsQuantity)
+                .calculateValue();
     }
 }

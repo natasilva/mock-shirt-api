@@ -6,7 +6,6 @@ import java.sql.Blob;
 import com.mockshirt.mockshirt.builder.ShirtImageBuilder;
 
 public interface IShirtImageBuilder {
-    ShirtImageBuilder builder();
 
     ShirtImageBuilder setLogo(BufferedImage logo);
 

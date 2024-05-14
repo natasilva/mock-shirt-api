@@ -10,7 +10,6 @@ import com.mockshirt.mockshirt.form.FormData;
 import com.mockshirt.mockshirt.repository.ShapeRepository;
 import com.mockshirt.mockshirt.service.interfaces.IShirtService;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -26,8 +25,6 @@ public class ShirtService implements IShirtService {
     @Override
     public List<Shirt> list(FormData formData) {
         try {
-            byte[] logo = formData.getFile().getBytes();
-
             List<Shape> shapes = shapeRepository.findByColor(formData.getColor());
 
             Iterator<Shape> shapeIterator = shapes.iterator();
@@ -36,9 +33,13 @@ public class ShirtService implements IShirtService {
 
             while (shapeIterator.hasNext()) {
                 Shape shape = shapeIterator.next();
-                Shirt shirt = shirtBuilder.builder()
-                        .setLogo(logo)
-                        .setSleeveLogo(shape.isSleeveLogo())
+                Shirt shirt = shirtBuilder
+                        .setLogo(formData.getFile())
+                        .setSleeveLogo("true".equals(formData.getSleeveLogo()))
+                        .setSize(formData.getSize())
+                        .setMaterial(formData.getMaterial())
+                        .setSleeve(shape.getTypeSleeve())
+                        .setLogoColorsQuantity(Integer.parseInt(formData.getLogoColorsQuantity()))
                         .setFrontUrl(shape.getFrontUrl())
                         .setBackUrl(shape.getBackUrl())
                         .build();
@@ -48,9 +49,6 @@ public class ShirtService implements IShirtService {
 
             return shirts;
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
