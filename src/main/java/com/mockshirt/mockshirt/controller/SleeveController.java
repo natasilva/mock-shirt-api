@@ -6,9 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.mockshirt.mockshirt.entity.Sleeve;
 import com.mockshirt.mockshirt.service.interfaces.IService;
+
+@CrossOrigin(origins = "*")
 
 @RestController
 @RequestMapping("/sleeves")
