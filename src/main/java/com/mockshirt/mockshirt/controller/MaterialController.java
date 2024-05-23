@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/materials")
+@RequestMapping("/api/materials")
 public class MaterialController {
     private final IService<Material> materialService;
 

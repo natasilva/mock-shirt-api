@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/collars")
+@RequestMapping("/api/collars")
 public class CollarController {
     private final IService<Collar> collarService;
 

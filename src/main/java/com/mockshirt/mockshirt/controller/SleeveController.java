@@ -14,7 +14,7 @@ import com.mockshirt.mockshirt.service.interfaces.IService;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/sleeves")
+@RequestMapping("/api/sleeves")
 public class SleeveController {
     private final IService<Sleeve> sleeveService;
 

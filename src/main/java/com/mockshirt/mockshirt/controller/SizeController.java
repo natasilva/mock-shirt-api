@@ -14,7 +14,7 @@ import com.mockshirt.mockshirt.service.interfaces.IService;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/sizes")
+@RequestMapping("/api/sizes")
 public class SizeController {
     private final IService<Size> sizeService;
 
