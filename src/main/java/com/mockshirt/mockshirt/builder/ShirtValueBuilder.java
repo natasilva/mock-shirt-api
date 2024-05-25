@@ -38,7 +38,7 @@ public class ShirtValueBuilder implements IShirtValueBuilder {
     }
 
     public float calculateValue() {
-        float value = sizeValue + materialValue + sleeveValue;
+        float value = materialValue + sleeveValue;
 
         if (sleeveLogo) {
             value += 5;

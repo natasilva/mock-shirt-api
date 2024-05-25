@@ -142,12 +142,12 @@ public class ShirtBuilder implements IShirtBuilder {
     }
 
     private float getValue() {
-        float sizeValue = sizeRepository.findByName(this.size).getValue();
+        //float sizeValue = sizeRepository.findByName(this.size).getValue();
         float materialValue = materialRepository.findByKey(this.material).getValue();
         float sleeveValue = sleeveRepository.findByKey(this.sleeve).getValue();
 
         return shirtValueBuilder
-                .setSizeValue(sizeValue)
+                //.setSizeValue(sizeValue)
                 .setMaterialValue(materialValue)
                 .setSleeveValue(sleeveValue)
                 .setSleeveLogo(sleeveLogo)

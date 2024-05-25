@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @CrossOrigin(origins = "*")
 
 @RestController
-@RequestMapping("/shirt")
+@RequestMapping("/api/shirt")
 public class ShirtController {
     private final IShirtService shirtService;
 
