@@ -24,13 +24,19 @@ import com.mockshirt.mockshirt.service.interfaces.IImageService;
 public class ImageService implements IImageService {
 
     public BufferedImage loadImage(String filePath) throws IOException {
-        File imgFile = new File(
-                "D:/documents/javaprojects/mock-shirt/mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/"
-                        + filePath);
+        File imgFile = new File(getRelativePath("src/main/java/com/mockshirt/mockshirt/templates/", filePath));
+
 
         BufferedImage value = ImageIO.read(imgFile);
         return value;
     }
+
+    private String getRelativePath(String basePath, String fileName) {
+        String userDir = System.getProperty("user.dir");
+        return userDir + File.separator + basePath + File.separator + fileName;
+        //String path = request.getSession().getServletContext().getRealPath("/");
+    }
+
 
     // Baixa imagem de uma URL
     public BufferedImage downloadImage(String imageUrl) throws IOException, URISyntaxException {
