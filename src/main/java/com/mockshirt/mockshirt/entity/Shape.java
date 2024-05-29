@@ -18,7 +18,6 @@ public class Shape {
     private Long id;
     private String typeCollar;
     private String typeSleeve;
-    private boolean sleeveLogo;
     private String color;
     private String frontUrl;
     private String backUrl;

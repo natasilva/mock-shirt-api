@@ -44,13 +44,6 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         imageService.drawBaseImage(g2d, shape);
         drawLogoWithPosition(logo, x, y, false, 0);
 
-        try {
-            imageService.saveImage(this.shirtImage, "back.png");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-
         return this;
     }
 
@@ -78,13 +71,6 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
 
         BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
         drawLogoWithPosition(logo, x, y, true, 330);
-
-        try {
-            imageService.saveImage(this.shirtImage, "front.png");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
 
         return this;
     }

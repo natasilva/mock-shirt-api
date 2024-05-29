@@ -6,16 +6,10 @@ import com.mockshirt.mockshirt.builder.interfaces.IShirtValueBuilder;
 
 @Component
 public class ShirtValueBuilder implements IShirtValueBuilder {
-    private float sizeValue;
     private float materialValue;
     private float sleeveValue;
     private boolean sleeveLogo;
     private float logoColorsQuantity;
-
-    public ShirtValueBuilder setSizeValue(float sizeValue) {
-        this.sizeValue = sizeValue;
-        return this;
-    }
 
     public ShirtValueBuilder setMaterialValue(float materialValue) {
         this.materialValue = materialValue;

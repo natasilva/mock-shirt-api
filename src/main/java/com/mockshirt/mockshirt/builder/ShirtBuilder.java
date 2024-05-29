@@ -9,7 +9,6 @@ import com.mockshirt.mockshirt.builder.interfaces.IShirtImageBuilder;
 import com.mockshirt.mockshirt.builder.interfaces.IShirtValueBuilder;
 import com.mockshirt.mockshirt.entity.Shirt;
 import com.mockshirt.mockshirt.repository.MaterialRepository;
-import com.mockshirt.mockshirt.repository.SizeRepository;
 import com.mockshirt.mockshirt.repository.SleeveRepository;
 import com.mockshirt.mockshirt.service.interfaces.IImageService;
 
@@ -28,9 +27,6 @@ public class ShirtBuilder implements IShirtBuilder {
     private IShirtImageBuilder shirtImageBuilder;
 
     @Autowired
-    private SizeRepository sizeRepository;
-
-    @Autowired
     private MaterialRepository materialRepository;
 
     @Autowired
@@ -40,7 +36,6 @@ public class ShirtBuilder implements IShirtBuilder {
     private int logoColorsQuantity;
     private boolean sleeveLogo;
     private String material;
-    private String size;
     private String sleeve;
 
     private String frontUrl;
@@ -73,11 +68,6 @@ public class ShirtBuilder implements IShirtBuilder {
 
     public ShirtBuilder setMaterial(String material) {
         this.material = material;
-        return this;
-    }
-
-    public ShirtBuilder setSize(String size) {
-        this.size = size;
         return this;
     }
 
@@ -142,12 +132,10 @@ public class ShirtBuilder implements IShirtBuilder {
     }
 
     private float getValue() {
-        //float sizeValue = sizeRepository.findByName(this.size).getValue();
         float materialValue = materialRepository.findByKey(this.material).getValue();
         float sleeveValue = sleeveRepository.findByKey(this.sleeve).getValue();
 
         return shirtValueBuilder
-                //.setSizeValue(sizeValue)
                 .setMaterialValue(materialValue)
                 .setSleeveValue(sleeveValue)
                 .setSleeveLogo(sleeveLogo)

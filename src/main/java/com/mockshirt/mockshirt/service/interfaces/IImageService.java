@@ -15,8 +15,6 @@ public interface IImageService {
 
     BufferedImage scaleImage(BufferedImage image, int width, int height);
 
-    void saveImage(BufferedImage image, String filePath) throws IOException;
-
     BufferedImage convertToBufferedImage(MultipartFile multipartFile);
 
     Blob convertToBlob(BufferedImage image);

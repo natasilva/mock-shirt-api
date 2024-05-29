@@ -4,8 +4,6 @@ import com.mockshirt.mockshirt.builder.ShirtValueBuilder;
 
 public interface IShirtValueBuilder {
 
-    ShirtValueBuilder setSizeValue(float sizeValue);
-
     ShirtValueBuilder setMaterialValue(float materialValue);
 
     ShirtValueBuilder setSleeveValue(float sleeveValue);

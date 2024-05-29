@@ -22,8 +22,6 @@ public interface IShirtBuilder {
 
     ShirtBuilder setMaterial(String material);
 
-    ShirtBuilder setSize(String size);
-
     ShirtBuilder setSleeve(String sleeve);
 
     ShirtBuilder setSleeveLogo(boolean sleeveLogo);

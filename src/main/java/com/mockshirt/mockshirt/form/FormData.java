@@ -9,7 +9,6 @@ public class FormData {
     private MultipartFile file;
     private String color;
     private String material;
-    //private String size;
     private String logoColorsQuantity;
     private String sleeveLogo;
 
@@ -18,7 +17,6 @@ public class FormData {
         this.file = file;
         this.color = color;
         this.material = material;
-        //this.size = size;
         this.logoColorsQuantity = logoColorsQuantity;
         this.sleeveLogo = sleeveLogo;
     }

@@ -24,9 +24,8 @@ import com.mockshirt.mockshirt.service.interfaces.IImageService;
 public class ImageService implements IImageService {
 
     public BufferedImage loadImage(String filePath) throws IOException {
-        File imgFile = new File(getRelativePath("src/main/java/com/mockshirt/mockshirt/templates/", filePath));
-
-
+        File imgFile = new File(
+                getRelativePath("mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/", filePath));
         BufferedImage value = ImageIO.read(imgFile);
         return value;
     }
@@ -34,9 +33,7 @@ public class ImageService implements IImageService {
     private String getRelativePath(String basePath, String fileName) {
         String userDir = System.getProperty("user.dir");
         return userDir + File.separator + basePath + File.separator + fileName;
-        //String path = request.getSession().getServletContext().getRealPath("/");
     }
-
 
     // Baixa imagem de uma URL
     public BufferedImage downloadImage(String imageUrl) throws IOException, URISyntaxException {
@@ -55,13 +52,6 @@ public class ImageService implements IImageService {
         return resizedImage;
     }
 
-    // Salva uma imagem no diretório
-    public void saveImage(BufferedImage image, String filePath) throws IOException {
-        ImageIO.write(image, "PNG", new File(
-                "D:/documents/javaprojects/mock-shirt/mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/"
-                        + filePath));
-    }
-
     // Converte imagem do tipo MultipartFile para o tipo BufferdImage
     public BufferedImage convertToBufferedImage(MultipartFile multipartFile) {
         try {
@@ -78,8 +68,7 @@ public class ImageService implements IImageService {
 
     // Converte uma imagem do tipo BufferdImage para o tipo Blob
     public Blob convertToBlob(BufferedImage image) {
-        try {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             ImageIO.write(image, "png", baos);
             byte[] bytes = baos.toByteArray();
             return new javax.sql.rowset.serial.SerialBlob(bytes);
