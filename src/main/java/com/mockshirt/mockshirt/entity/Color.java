@@ -18,6 +18,7 @@ public class Color {
     private Long id;
     private String name;
     private String key;
+    private String code;
 
     public Color() {
     }

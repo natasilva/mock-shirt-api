@@ -2,37 +2,33 @@ package com.mockshirt.mockshirt.service;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Color;
+
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.sql.Blob;
-import java.io.File;
-
 import javax.imageio.ImageIO;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.mockshirt.mockshirt.service.interfaces.IImageService;
 
 @Service
 public class ImageService implements IImageService {
-
-    public BufferedImage loadImage(String filePath) throws IOException {
-        File imgFile = new File(
-                getRelativePath("mock-shirt-api/src/main/java/com/mockshirt/mockshirt/templates/", filePath));
-        BufferedImage value = ImageIO.read(imgFile);
-        return value;
-    }
-
-    private String getRelativePath(String basePath, String fileName) {
-        String userDir = System.getProperty("user.dir");
-        return userDir + File.separator + basePath + File.separator + fileName;
+    // Carrega a imagem de dentro da pasta images/
+    public BufferedImage loadImage(String fileName) throws IOException {
+        try (InputStream imgStream = getClass().getClassLoader().getResourceAsStream("images/" + fileName)) {
+            if (imgStream == null) {
+                throw new IOException("File not found: " + fileName);
+            }
+            return ImageIO.read(imgStream);
+        }
     }
 
     // Baixa imagem de uma URL
@@ -101,5 +97,39 @@ public class ImageService implements IImageService {
     // Desenha a imagem da logo no contexto
     public void drawLogo(Graphics2D g2d, BufferedImage logo, int x, int y) {
         g2d.drawImage(logo, x, y, null);
+    }
+
+    public BufferedImage colorizeImage(BufferedImage image, String hexColor) {
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        Color newColor = Color.decode(hexColor);
+
+        // Criar uma nova imagem com o mesmo tamanho da original
+        BufferedImage newImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+
+        // Percorrer todos os pixels da imagem original
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                // Obter a cor do pixel atual
+                Color originalColor = new Color(image.getRGB(x, y), true);
+
+                // Verificar se o pixel é branco ou próximo de branco
+                if (isWhiteOrNearWhite(originalColor)) {
+                    // Substituir pelo novo pixel colorido
+                    newImage.setRGB(x, y, newColor.getRGB());
+                } else {
+                    // Manter a cor original
+                    newImage.setRGB(x, y, originalColor.getRGB());
+                }
+            }
+        }
+        return newImage;
+    }
+
+    private boolean isWhiteOrNearWhite(Color color) {
+        // Definir um limiar para considerar um pixel como "próximo de branco"
+        int threshold = 240;
+        return color.getRed() >= threshold && color.getGreen() >= threshold && color.getBlue() >= threshold;
     }
 }

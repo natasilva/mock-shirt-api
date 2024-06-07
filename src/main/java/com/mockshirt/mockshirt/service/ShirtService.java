@@ -38,6 +38,7 @@ public class ShirtService implements IShirtService {
                         .setSleeveLogo("true".equals(formData.getSleeveLogo()))
                         .setMaterial(formData.getMaterial())
                         .setSleeve(shape.getTypeSleeve())
+                        .setCollar(shape.getTypeCollar())
                         .setLogoColorsQuantity(Integer.parseInt(formData.getLogoColorsQuantity()))
                         .setFrontUrl(shape.getFrontUrl())
                         .setBackUrl(shape.getBackUrl())

@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IImageService {
     BufferedImage loadImage(String filePath) throws IOException;
 
+    BufferedImage colorizeImage(BufferedImage image, String hexColor);
+
     BufferedImage downloadImage(String imageUrl) throws IOException, URISyntaxException;
 
     BufferedImage scaleImage(BufferedImage image, int width, int height);

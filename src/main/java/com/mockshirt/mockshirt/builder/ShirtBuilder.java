@@ -37,6 +37,7 @@ public class ShirtBuilder implements IShirtBuilder {
     private boolean sleeveLogo;
     private String material;
     private String sleeve;
+    private String collar;
 
     private String frontUrl;
     private String backUrl;
@@ -73,6 +74,11 @@ public class ShirtBuilder implements IShirtBuilder {
 
     public ShirtBuilder setSleeve(String sleeve) {
         this.sleeve = sleeve;
+        return this;
+    }
+
+    public ShirtBuilder setCollar(String collar) {
+        this.collar = collar;
         return this;
     }
 
@@ -120,6 +126,8 @@ public class ShirtBuilder implements IShirtBuilder {
                     .setLogo(logo)
                     .setShape(shapeImage)
                     .withFrontLogo()
+                    .hasLongSleeve("long".equals(this.sleeve))
+                    .hasRoundCollar("round".equals(this.collar))
                     .withLeftSleeveLogo(this.sleeveLogo)
                     .withRightSleeveLogo(this.sleeveLogo)
                     .getBlob();

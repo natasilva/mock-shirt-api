@@ -18,6 +18,8 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
 
     private BufferedImage logo;
     private BufferedImage shape;
+    private boolean hasLongSleeve;
+    private boolean hasRoundCollar;
     private BufferedImage shirtImage;
 
     public ShirtImageBuilder() {
@@ -30,6 +32,16 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
 
     public ShirtImageBuilder setShape(BufferedImage shape) {
         this.shape = shape;
+        return this;
+    }
+
+    public ShirtImageBuilder hasLongSleeve(boolean hasLongSleeve) {
+        this.hasLongSleeve = hasLongSleeve;
+        return this;
+    }
+
+    public ShirtImageBuilder hasRoundCollar(boolean hasRoundCollar) {
+        this.hasRoundCollar = hasRoundCollar;
         return this;
     }
 
@@ -48,10 +60,10 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
     }
 
     public ShirtImageBuilder withFrontLogo() {
-        int x = 340;
-        int y = 140;
+        int x = this.hasLongSleeve && this.hasRoundCollar ? 215 : 230;
+        int y = 100;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 90, 90);
+        BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
         shirtImage = imageService.createBlankImage(shape.getWidth(), shape.getHeight());
 
         Graphics2D g2d = shirtImage.createGraphics();
@@ -66,11 +78,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
             return this;
         }
 
-        int x = 485;
-        int y = 170;
+        int x = this.hasLongSleeve ? 310 : (this.hasRoundCollar ? 290 : 310);
+        int y = this.hasLongSleeve ? 135 : 135;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
-        drawLogoWithPosition(logo, x, y, true, 330);
+        BufferedImage logo = imageService.scaleImage(this.logo, 55, 55);
+        drawLogoWithPosition(logo, x, y, true, 340);
 
         return this;
     }
@@ -80,11 +92,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
             return this;
         }
 
-        int x = 35;
-        int y = 170;
+        int x = this.hasLongSleeve ? 35 : 30;
+        int y = this.hasLongSleeve ? 135 : 135;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
-        drawLogoWithPosition(logo, x, y, true, 30);
+        BufferedImage logo = imageService.scaleImage(this.logo, 55, 55);
+        drawLogoWithPosition(logo, x, y, true, 20);
 
         return this;
     }
