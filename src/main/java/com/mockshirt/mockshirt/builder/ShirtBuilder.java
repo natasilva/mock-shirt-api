@@ -36,8 +36,8 @@ public class ShirtBuilder implements IShirtBuilder {
     private int logoColorsQuantity;
     private boolean sleeveLogo;
     private String material;
-    private String sleeve;
-    private String collar;
+    private String typeSleeve;
+    private String typeCollar;
 
     private String frontUrl;
     private String backUrl;
@@ -54,7 +54,7 @@ public class ShirtBuilder implements IShirtBuilder {
         Blob back = getBackImage();
         Blob front = getFrontImage();
 
-        return new Shirt(back, front, value);
+        return new Shirt(back, front, value, this.typeCollar, this.typeSleeve);
     }
 
     public ShirtBuilder setLogo(MultipartFile logo) {
@@ -72,13 +72,13 @@ public class ShirtBuilder implements IShirtBuilder {
         return this;
     }
 
-    public ShirtBuilder setSleeve(String sleeve) {
-        this.sleeve = sleeve;
+    public ShirtBuilder setSleeve(String typeSleeve) {
+        this.typeSleeve = typeSleeve;
         return this;
     }
 
-    public ShirtBuilder setCollar(String collar) {
-        this.collar = collar;
+    public ShirtBuilder setCollar(String typeCollar) {
+        this.typeCollar = typeCollar;
         return this;
     }
 
@@ -126,8 +126,8 @@ public class ShirtBuilder implements IShirtBuilder {
                     .setLogo(logo)
                     .setShape(shapeImage)
                     .withFrontLogo()
-                    .hasLongSleeve("long".equals(this.sleeve))
-                    .hasRoundCollar("round".equals(this.collar))
+                    .hasLongSleeve("long".equals(this.typeSleeve))
+                    .hasRoundCollar("round".equals(this.typeCollar))
                     .withLeftSleeveLogo(this.sleeveLogo)
                     .withRightSleeveLogo(this.sleeveLogo)
                     .getBlob();
@@ -141,7 +141,7 @@ public class ShirtBuilder implements IShirtBuilder {
 
     private float getValue() {
         float materialValue = materialRepository.findByKey(this.material).getValue();
-        float sleeveValue = sleeveRepository.findByKey(this.sleeve).getValue();
+        float sleeveValue = sleeveRepository.findByKey(this.typeSleeve).getValue();
 
         return shirtValueBuilder
                 .setMaterialValue(materialValue)
