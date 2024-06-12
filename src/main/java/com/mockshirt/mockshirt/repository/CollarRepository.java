@@ -7,5 +7,5 @@ import com.mockshirt.mockshirt.entity.Collar;
 
 @Repository
 public interface CollarRepository extends JpaRepository<Collar, Long> {
-
+    Collar findByKey(String key);
 }

@@ -7,7 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mockshirt.mockshirt.builder.interfaces.IShirtBuilder;
 import com.mockshirt.mockshirt.builder.interfaces.IShirtImageBuilder;
 import com.mockshirt.mockshirt.builder.interfaces.IShirtValueBuilder;
+import com.mockshirt.mockshirt.entity.Collar;
 import com.mockshirt.mockshirt.entity.Shirt;
+import com.mockshirt.mockshirt.entity.Sleeve;
+import com.mockshirt.mockshirt.repository.CollarRepository;
 import com.mockshirt.mockshirt.repository.MaterialRepository;
 import com.mockshirt.mockshirt.repository.SleeveRepository;
 import com.mockshirt.mockshirt.service.interfaces.IImageService;
@@ -32,6 +35,9 @@ public class ShirtBuilder implements IShirtBuilder {
     @Autowired
     private SleeveRepository sleeveRepository;
 
+    @Autowired
+    private CollarRepository collarRepository;
+
     private BufferedImage logo;
     private int logoColorsQuantity;
     private boolean sleeveLogo;
@@ -54,7 +60,10 @@ public class ShirtBuilder implements IShirtBuilder {
         Blob back = getBackImage();
         Blob front = getFrontImage();
 
-        return new Shirt(back, front, value, this.typeCollar, this.typeSleeve);
+        Sleeve sleeve = sleeveRepository.findByKey(this.typeSleeve);
+        Collar collar = collarRepository.findByKey(this.typeCollar);
+
+        return new Shirt(back, front, value, collar, sleeve);
     }
 
     public ShirtBuilder setLogo(MultipartFile logo) {
