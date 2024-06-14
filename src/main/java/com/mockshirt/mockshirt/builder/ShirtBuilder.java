@@ -134,9 +134,9 @@ public class ShirtBuilder implements IShirtBuilder {
             Blob shirtImage = shirtImageBuilder
                     .setLogo(logo)
                     .setShape(shapeImage)
-                    .withFrontLogo()
                     .hasLongSleeve("long".equals(this.typeSleeve))
                     .hasRoundCollar("round".equals(this.typeCollar))
+                    .withFrontLogo()
                     .withLeftSleeveLogo(this.sleeveLogo)
                     .withRightSleeveLogo(this.sleeveLogo)
                     .getBlob();

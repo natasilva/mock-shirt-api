@@ -46,7 +46,7 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
     }
 
     public ShirtImageBuilder withBackLogo() {
-        int x = 105;
+        int x = 135;
         int y = 70;
 
         BufferedImage logo = imageService.scaleImage(this.logo, 141, 100);
@@ -60,7 +60,7 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
     }
 
     public ShirtImageBuilder withFrontLogo() {
-        int x = this.hasLongSleeve && this.hasRoundCollar ? 215 : 230;
+        int x = this.hasLongSleeve ? (this.hasRoundCollar ? 230 : 235) : (this.hasRoundCollar ? 210 : 230);
         int y = 100;
 
         BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
