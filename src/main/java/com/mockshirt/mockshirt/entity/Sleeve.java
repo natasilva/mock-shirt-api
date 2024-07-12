@@ -18,7 +18,7 @@ public class Sleeve {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String key;
+    private String acronym;
     private Float value;
 
     public Sleeve() {

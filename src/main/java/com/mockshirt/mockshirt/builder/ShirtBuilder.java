@@ -60,8 +60,8 @@ public class ShirtBuilder implements IShirtBuilder {
         Blob back = getBackImage();
         Blob front = getFrontImage();
 
-        Sleeve sleeve = sleeveRepository.findByKey(this.typeSleeve);
-        Collar collar = collarRepository.findByKey(this.typeCollar);
+        Sleeve sleeve = sleeveRepository.findByAcronym(this.typeSleeve);
+        Collar collar = collarRepository.findByAcronym(this.typeCollar);
 
         return new Shirt(back, front, value, collar, sleeve);
     }
@@ -149,8 +149,8 @@ public class ShirtBuilder implements IShirtBuilder {
     }
 
     private float getValue() {
-        float materialValue = materialRepository.findByKey(this.material).getValue();
-        float sleeveValue = sleeveRepository.findByKey(this.typeSleeve).getValue();
+        float materialValue = materialRepository.findByAcronym(this.material).getValue();
+        float sleeveValue = sleeveRepository.findByAcronym(this.typeSleeve).getValue();
 
         return shirtValueBuilder
                 .setMaterialValue(materialValue)

@@ -6,5 +6,5 @@ import com.mockshirt.mockshirt.entity.Material;
 
 @Repository
 public interface MaterialRepository extends JpaRepository<Material, Long> {
-    Material findByKey(String key);
+    Material findByAcronym(String acronym);
 }
