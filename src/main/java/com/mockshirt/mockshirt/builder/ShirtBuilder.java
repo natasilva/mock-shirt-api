@@ -38,7 +38,11 @@ public class ShirtBuilder implements IShirtBuilder {
     @Autowired
     private CollarRepository collarRepository;
 
-    private BufferedImage logo;
+    private BufferedImage frontLogo;
+    private BufferedImage backLogo;
+    private BufferedImage rightSleeveLogo;
+    private BufferedImage leftSleeveLogo;
+
     private int logoColorsQuantity;
     private boolean sleeveLogo;
     private String material;
@@ -60,14 +64,29 @@ public class ShirtBuilder implements IShirtBuilder {
         Blob back = getBackImage();
         Blob front = getFrontImage();
 
-        Sleeve sleeve = sleeveRepository.findByKey(this.typeSleeve);
-        Collar collar = collarRepository.findByKey(this.typeCollar);
+        Sleeve sleeve = sleeveRepository.findByAcronym(this.typeSleeve);
+        Collar collar = collarRepository.findByAcronym(this.typeCollar);
 
         return new Shirt(back, front, value, collar, sleeve);
     }
 
-    public ShirtBuilder setLogo(MultipartFile logo) {
-        this.logo = this.imageService.convertToBufferedImage(logo);
+    public ShirtBuilder setFrontLogo(MultipartFile logo) {
+        this.frontLogo = this.imageService.convertToBufferedImage(logo);
+        return this;
+    }
+
+    public ShirtBuilder setBackLogo(MultipartFile logo) {
+        this.backLogo = this.imageService.convertToBufferedImage(logo);
+        return this;
+    }
+
+    public ShirtBuilder setRightSleeveLogo(MultipartFile logo) {
+        this.rightSleeveLogo = this.imageService.convertToBufferedImage(logo);
+        return this;
+    }
+
+    public ShirtBuilder setLeftSleeveLogo(MultipartFile logo) {
+        this.leftSleeveLogo = this.imageService.convertToBufferedImage(logo);
         return this;
     }
 
@@ -91,31 +110,29 @@ public class ShirtBuilder implements IShirtBuilder {
         return this;
     }
 
-    public ShirtBuilder setSleeveLogo(boolean sleeveLogo) {
+    public ShirtBuilder hasSleeveLogo(boolean sleeveLogo) {
         this.sleeveLogo = sleeveLogo;
         return this;
     }
 
-    public ShirtBuilder setFrontUrl(String frontUrl) {
+    public ShirtBuilder setShapeFrontUrl(String frontUrl) {
         this.frontUrl = frontUrl;
         return this;
     }
 
-    public ShirtBuilder setBackUrl(String backUrl) {
+    public ShirtBuilder setShapeBackUrl(String backUrl) {
         this.backUrl = backUrl;
         return this;
     }
 
     public Blob getBackImage() {
         try {
-            // BufferedImage shape = imageService.downloadImage(backUrl);
-
-            BufferedImage shapeImage = imageService.loadImage(backUrl);
+            BufferedImage shapeImage = imageService.loadImage(this.backUrl);
 
             Blob shirtImage = shirtImageBuilder
-                    .setLogo(logo)
+                    // .setBackLogo(this.backLogo)
                     .setShape(shapeImage)
-                    .withBackLogo()
+                    .withBackLogo(this.backLogo)
                     .getBlob();
 
             return shirtImage;
@@ -127,18 +144,15 @@ public class ShirtBuilder implements IShirtBuilder {
 
     public Blob getFrontImage() {
         try {
-            // BufferedImage shape = imageService.downloadImage(frontUrl);
-
-            BufferedImage shapeImage = imageService.loadImage(frontUrl);
+            BufferedImage shapeImage = imageService.loadImage(this.frontUrl);
 
             Blob shirtImage = shirtImageBuilder
-                    .setLogo(logo)
                     .setShape(shapeImage)
                     .hasLongSleeve("long".equals(this.typeSleeve))
                     .hasRoundCollar("round".equals(this.typeCollar))
-                    .withFrontLogo()
-                    .withLeftSleeveLogo(this.sleeveLogo)
-                    .withRightSleeveLogo(this.sleeveLogo)
+                    .withFrontLogo(this.frontLogo)
+                    .withLeftSleeveLogo(this.leftSleeveLogo)
+                    .withRightSleeveLogo(this.rightSleeveLogo)
                     .getBlob();
 
             return shirtImage;
@@ -149,13 +163,13 @@ public class ShirtBuilder implements IShirtBuilder {
     }
 
     private float getValue() {
-        float materialValue = materialRepository.findByKey(this.material).getValue();
-        float sleeveValue = sleeveRepository.findByKey(this.typeSleeve).getValue();
+        float materialValue = materialRepository.findByAcronym(this.material).getValue();
+        float sleeveValue = sleeveRepository.findByAcronym(this.typeSleeve).getValue();
 
         return shirtValueBuilder
                 .setMaterialValue(materialValue)
                 .setSleeveValue(sleeveValue)
-                .setSleeveLogo(sleeveLogo)
+                .hasSleeveLogo(sleeveLogo)
                 .setLogoColorsQuantity(logoColorsQuantity)
                 .calculateValue();
     }

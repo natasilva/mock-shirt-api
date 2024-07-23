@@ -7,17 +7,15 @@ import com.mockshirt.mockshirt.builder.ShirtImageBuilder;
 
 public interface IShirtImageBuilder {
 
-    ShirtImageBuilder setLogo(BufferedImage logo);
-
     ShirtImageBuilder setShape(BufferedImage shape);
 
-    ShirtImageBuilder withBackLogo();
+    ShirtImageBuilder withBackLogo(BufferedImage backLogo);
 
-    ShirtImageBuilder withFrontLogo();
+    ShirtImageBuilder withFrontLogo(BufferedImage frontLogo);
 
-    ShirtImageBuilder withRightSleeveLogo(boolean execute);
+    ShirtImageBuilder withRightSleeveLogo(BufferedImage rightSleeveLogo);
 
-    ShirtImageBuilder withLeftSleeveLogo(boolean execute);
+    ShirtImageBuilder withLeftSleeveLogo(BufferedImage leftSleeveLogo);
 
     Blob getBlob();
 }

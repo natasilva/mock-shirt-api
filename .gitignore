@@ -32,6 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-/pgdata
+/mysql-volume
 .env
 *.tar
+data.sql

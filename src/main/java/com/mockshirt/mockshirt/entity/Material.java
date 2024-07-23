@@ -17,7 +17,7 @@ public class Material {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private String key;
+    private String acronym;
     private Float value;
 
     public Material() {

@@ -34,14 +34,17 @@ public class ShirtService implements IShirtService {
             while (shapeIterator.hasNext()) {
                 Shape shape = shapeIterator.next();
                 Shirt shirt = shirtBuilder
-                        .setLogo(formData.getFile())
-                        .setSleeveLogo("true".equals(formData.getSleeveLogo()))
+                        .setFrontLogo(formData.getFrontLogo())
+                        .setBackLogo(formData.getBackLogo())
+                        .setRightSleeveLogo(formData.getRightSleeveLogo())
+                        .setLeftSleeveLogo(formData.getLeftSleeveLogo())
+                        .hasSleeveLogo("true".equals(formData.getSleeveLogo()))
                         .setMaterial(formData.getMaterial())
                         .setSleeve(shape.getTypeSleeve())
                         .setCollar(shape.getTypeCollar())
                         .setLogoColorsQuantity(Integer.parseInt(formData.getLogoColorsQuantity()))
-                        .setFrontUrl(shape.getFrontUrl())
-                        .setBackUrl(shape.getBackUrl())
+                        .setShapeFrontUrl(shape.getFrontUrl())
+                        .setShapeBackUrl(shape.getBackUrl())
                         .build();
 
                 shirts.add(shirt);

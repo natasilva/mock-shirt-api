@@ -6,5 +6,5 @@ import com.mockshirt.mockshirt.entity.Sleeve;
 
 @Repository
 public interface SleeveRepository extends JpaRepository<Sleeve, Long> {
-    Sleeve findByKey(String key);
+    Sleeve findByAcronym(String acronym);
 }
