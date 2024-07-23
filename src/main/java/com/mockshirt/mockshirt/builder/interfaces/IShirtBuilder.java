@@ -12,11 +12,13 @@ public interface IShirtBuilder {
 
     Shirt build();
 
-    ShirtBuilder setLogo(MultipartFile logo);
+    ShirtBuilder setFrontLogo(MultipartFile logo);
 
-    ShirtBuilder setBackUrl(String backUrl);
+    ShirtBuilder setBackLogo(MultipartFile logo);
 
-    ShirtBuilder setFrontUrl(String frontUrl);
+    ShirtBuilder setShapeBackUrl(String backUrl);
+
+    ShirtBuilder setShapeFrontUrl(String frontUrl);
 
     ShirtBuilder setLogoColorsQuantity(int logoColorsQuantity);
 
@@ -24,7 +26,7 @@ public interface IShirtBuilder {
 
     ShirtBuilder setSleeve(String sleeve);
 
-    ShirtBuilder setSleeveLogo(boolean sleeveLogo);
+    ShirtBuilder hasSleeveLogo(boolean sleeveLogo);
 
     Blob getBackImage();
 

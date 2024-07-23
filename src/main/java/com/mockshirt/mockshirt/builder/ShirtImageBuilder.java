@@ -16,18 +16,12 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
     @Autowired
     private IImageService imageService;
 
-    private BufferedImage logo;
     private BufferedImage shape;
     private boolean hasLongSleeve;
     private boolean hasRoundCollar;
     private BufferedImage shirtImage;
 
     public ShirtImageBuilder() {
-    }
-
-    public ShirtImageBuilder setLogo(BufferedImage logo) {
-        this.logo = logo;
-        return this;
     }
 
     public ShirtImageBuilder setShape(BufferedImage shape) {
@@ -45,11 +39,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         return this;
     }
 
-    public ShirtImageBuilder withBackLogo() {
+    public ShirtImageBuilder withBackLogo(BufferedImage backLogo) {
         int x = 135;
         int y = 70;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 141, 100);
+        BufferedImage logo = imageService.scaleImage(backLogo, 141, 100);
         shirtImage = imageService.createBlankImage(shape.getWidth(), shape.getHeight());
 
         Graphics2D g2d = shirtImage.createGraphics();
@@ -59,11 +53,11 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         return this;
     }
 
-    public ShirtImageBuilder withFrontLogo() {
+    public ShirtImageBuilder withFrontLogo(BufferedImage frontLogo) {
         int x = this.hasLongSleeve ? (this.hasRoundCollar ? 230 : 235) : (this.hasRoundCollar ? 210 : 230);
         int y = 100;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 70, 70);
+        BufferedImage logo = imageService.scaleImage(frontLogo, 70, 70);
         shirtImage = imageService.createBlankImage(shape.getWidth(), shape.getHeight());
 
         Graphics2D g2d = shirtImage.createGraphics();
@@ -73,29 +67,29 @@ public class ShirtImageBuilder implements IShirtImageBuilder {
         return this;
     }
 
-    public ShirtImageBuilder withRightSleeveLogo(boolean execute) {
-        if (!execute) {
+    public ShirtImageBuilder withRightSleeveLogo(BufferedImage rightSleeveLogo) {
+        if (rightSleeveLogo == null) {
             return this;
         }
 
         int x = this.hasLongSleeve ? 310 : (this.hasRoundCollar ? 290 : 310);
         int y = this.hasLongSleeve ? 135 : 135;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 55, 55);
+        BufferedImage logo = imageService.scaleImage(rightSleeveLogo, 55, 55);
         drawLogoWithPosition(logo, x, y, true, 340);
 
         return this;
     }
 
-    public ShirtImageBuilder withLeftSleeveLogo(boolean execute) {
-        if (!execute) {
+    public ShirtImageBuilder withLeftSleeveLogo(BufferedImage leftSleeveLogo) {
+        if (leftSleeveLogo == null) {
             return this;
         }
 
         int x = this.hasLongSleeve ? 35 : 30;
         int y = this.hasLongSleeve ? 135 : 135;
 
-        BufferedImage logo = imageService.scaleImage(this.logo, 55, 55);
+        BufferedImage logo = imageService.scaleImage(leftSleeveLogo, 55, 55);
         drawLogoWithPosition(logo, x, y, true, 20);
 
         return this;

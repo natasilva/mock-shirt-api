@@ -21,7 +21,7 @@ public class ShirtValueBuilder implements IShirtValueBuilder {
         return this;
     }
 
-    public ShirtValueBuilder setSleeveLogo(boolean sleeveLogo) {
+    public ShirtValueBuilder hasSleeveLogo(boolean sleeveLogo) {
         this.sleeveLogo = sleeveLogo;
         return this;
     }

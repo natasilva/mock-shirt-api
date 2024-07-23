@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.mockshirt.mockshirt.entity.Sleeve;
@@ -23,8 +25,8 @@ public class SleeveController {
     }
 
     @GetMapping
-    public List<Sleeve> list() {
+    public ResponseEntity<List<Sleeve>> list() {
         List<Sleeve> result = this.sleeveService.list();
-        return result;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

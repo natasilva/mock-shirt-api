@@ -8,7 +8,7 @@ public interface IShirtValueBuilder {
 
     ShirtValueBuilder setSleeveValue(float sleeveValue);
 
-    ShirtValueBuilder setSleeveLogo(boolean sleeveLogo);
+    ShirtValueBuilder hasSleeveLogo(boolean sleeveLogo);
 
     ShirtValueBuilder setLogoColorsQuantity(float logoColorsQuantity);
 
